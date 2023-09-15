@@ -102,11 +102,11 @@ function App() {
       {
         data.login && data.start && data.register ?
           <div>
-            {data.start}
+            {data.start.status}
             <br />
-            {data.register}
+            {data.register.status}
             <br />
-            {data.login}
+            {data.login.status}
           </div>
           :
           <div>
