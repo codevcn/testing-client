@@ -10,43 +10,77 @@ function App() {
     login: null,
   })
 
+  const [logouting, setLogouting] = useState(false)
+
   const starting = async () => {
     let api = '/'
 
-    let { data } = await axios.get(
-      server + api,
-    )
+    try {
+      let { data } = await axios.get(
+        server + api,
+      )
 
-    console.log('>>> data >>>', data)
+      console.log('>>> data >>>', data)
 
-    setData(pre => ({ ...pre, start: data }))
+      setData(pre => ({ ...pre, start: data }))
+    } catch (error) {
+      console.log('>>> err 1 >>>', error)
+    }
   }
 
   const register = async () => {
     let api = '/register'
 
-    let { data } = await axios.post(
-      server + api,
-      { pass: 'pass vcn', username: 'username vcn hellos' },
-      { withCredentials: true }
-    )
+    try {
+      let { data } = await axios.post(
+        server + api,
+        { pass: 'pass vcn', username: 'username vcn hellos' },
+        { withCredentials: true }
+      )
 
-    console.log('>>> data >>>', data)
+      console.log('>>> data >>>', data)
 
-    setData(pre => ({ ...pre, register: data }))
+      setData(pre => ({ ...pre, register: data }))
+    } catch (error) {
+      console.log('>>> err 2 >>>', error)
+    }
   }
 
   const login = async () => {
     let api = '/login'
 
-    let { data } = await axios.post(
-      server + api,
-      { withCredentials: true }
-    )
+    try {
+      let { data } = await axios.post(
+        server + api,
+        { withCredentials: true }
+      )
 
-    console.log('>>> data >>>', data)
+      console.log('>>> data >>>', data)
 
-    setData(pre => ({ ...pre, login: data }))
+      setData(pre => ({ ...pre, login: data }))
+    } catch (error) {
+      console.log('>>> err 3 >>>', error)
+    }
+  }
+
+  const logout = async () => {
+    let api = '/logout'
+
+    try {
+      setLogouting(true)
+
+      let { data } = await axios.post(
+        server + api,
+        {},
+        { withCredentials: true }
+      )
+
+      console.log('>>> data >>>', data)
+
+      setLogouting(false)
+    } catch (error) {
+      console.log('>>> err 4 >>>', error)
+    }
   }
 
   useEffect(() => {
@@ -79,6 +113,18 @@ function App() {
             loading...
           </div>
       }
+
+      <button
+        style={{ padding: '20px', backgroundColor: 'black', color: 'white' }}
+        onClick={logout}
+      >
+        {
+          logouting ?
+            'logouting...'
+            :
+            'logout'
+        }
+      </button>
 
     </div>
   )
